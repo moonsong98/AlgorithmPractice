@@ -10,6 +10,7 @@ bool jump(int y, int x) {
 	if(y == n-1 && x == n-1) return true;
 	if(y >= n || x >= n) return false;
 	int& ret = cache[y][x];
+	if(ret != -1) return ret;
 	return ret = jump(y + board[y][x], x) || jump(y, x + board[y][x]);
 }
 
