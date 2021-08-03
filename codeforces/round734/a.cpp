@@ -2,23 +2,16 @@
 
 using namespace std;
 
-int main(void) {
-	cin.sync_with_stdio(false);
-	int n;
-	cin >> n;
-	for(int i = 0; i < n; ++i) {
-		int a;
-		cin >> a;
-		switch(a%3) {
-			case 0:
-				cout << a / 3 << " " << a / 3 << endl;
-				break;
-			case 1:
-				cout << a / 3 + 1 <<  " " << a / 3 << endl;
-				break;
-			case 2:
-				cout << a / 3 << " " << a / 3 + 1 << endl;
-				break;
-		}
+int main(void){
+	int t;
+	cin>>t;
+	while(t--){
+		int n;
+		cin>>n;
+		int a=n/3;
+		int b=a;
+		if(n%3==1)a+=1;
+		if(n%3==2)b+=1;
+		cout<<a<<' '<<b<<endl;
 	}
 }
