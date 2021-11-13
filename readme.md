@@ -1,3 +1,9 @@
+# 현재 실력
+[![Solved.ac
+프로필](http://mazassumnida.wtf/api/v2/generate_badge?boj=moonsong98)](https://solved.ac/moonsong98)
+[![CodeForces Profile](https://cf.leed.at?id=moonsong98)](https://codeforces.com/profile/moonsong98)
+
+
 # 알고리즘 공부 연대기
 ## 군복무 (2021/02/15~)
 ### 2021/09/07
