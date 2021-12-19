@@ -1,23 +1,22 @@
 #include<iostream>
 #include<vector>
+#include<algorithm>
 
 using namespace std;
 typedef long long ll;
 
 int main(void) {
-	ios_base::sync_with_stdio(false); cin.tie(nullptr);
 	int n; cin >> n;
-	vector<ll> pSum(n+1, 0); 
-	vector<ll> lowest(n+1, 0); // i번째 수가 사라진 이후 가장 작은 수
-	for(int i=1; i<=n; ++i) {
-		cin >> seq[i];
-		seq[i] += seq[i-1];
+	vector<ll> scores(n); for(int i=0; i<n; ++i) cin >> scores[i];
+	vector<ll> smallest(n); vector<int> pSum(n,0); pSum[n-1] = smallest[n-1]=scores[n-1];
+	for(int i=n-2; i>=1; --i) {
+		pSum[i]=pSum[i+1]+scores[i];
+		smallest[i]=(scores[i]<=smallest[i+1]?scores[i]:smallest[i+1]);
 	}
-	for(int i=n-1; i>=1; --i) {
-		int v=seq[i+1]-seq[i];
-		lowest[i]=min(lowest[i+1], v);
-	} 
-	for(int i=1; i<=n; ++i) {
-		
-	}
+	int maxIndex=n-2;
+	for(int i=n-3; i>=1; --i)
+		if((pSum[i]-smallest[i])*(n-maxIndex-1) >= (pSum[maxIndex]-smallest[maxIndex])*(n-i-1)) maxIndex=i;
+	
+	for(int i=1; i<=n-2; ++i) 
+		if((pSum[i]-smallest[i])*(n-maxIndex-1) == (pSum[maxIndex]-smallest[maxIndex])*(n-i-1)) cout << i << '\n';
 }
