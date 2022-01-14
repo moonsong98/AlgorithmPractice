@@ -14,7 +14,7 @@ long long calc(long long mid, vector<long long>& len) {
 int main(void) {
 	long long n, k;
 	long long low=1, high=-1, ans=-1;
-	cin >> k >> n;
+    cin >> k >> n;
 	vector<long long> len(k, 0);	
 	for(int i=0; i<k; ++i){
 		cin >> len[i];
