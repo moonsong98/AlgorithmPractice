@@ -9,7 +9,7 @@ int main(void) {
 		int N, K, ans=0;
 		cin >> N >> K;
 		vector<vector<char>>board(N+1, vector<char>(N+1));
-		vector<vector<vector<int>>>dp(N+1, vector<vector<int>>(N+1,vector<int>(2, 0))); //count[i][j][d] : d=0: right, d=1: down;
+		vector<vector<vector<int>>>dp(N+1, vector<vector<int>>(N+1,vector<int>(2, 0)));
 		dp[1][1][0]=dp[1][1][1]=1;
 		for(int i=1; i<=N; ++i) for(int j=1; j<=N; ++j) cin >> board[i][j];
 		for(int k=0; k<=K; ++k) {

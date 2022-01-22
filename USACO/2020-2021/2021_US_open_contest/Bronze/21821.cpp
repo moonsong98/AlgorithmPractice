@@ -43,23 +43,6 @@ int main(void) {
 	
 	for(int i=0; i<n; ++i) {
 		for(int j=0; j<n; ++j) {
-			if(ans[i][j]==1) {
-				for(int k=0; k<n; ++k) {
-					if(ans[i][k]==0 && ans[k][j]==-1) {
-						ans[k][j]=1;
-						ans[j][k]=0;
-					}
-					else if(ans[j][k]==1 && ans[i][k]==-1) {
-						ans[i][k]=1;
-						ans[k][i]=0;
-					}
-				}
-			}
-		}
-	}
-	
-	for(int i=0; i<n; ++i) {
-		for(int j=0; j<n; ++j) {
 			if(ans[i][j]==-1) cout << '?';
 			else if(ans[i][j]==2) cout << 'B';
 			else  cout << ans[i][j];
