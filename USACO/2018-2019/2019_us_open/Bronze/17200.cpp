@@ -1,4 +1,30 @@
 #include<iostream>
+#include<map>
+#include<string>
+
+using namespace std;
+
+int main(void) {
+	int n; cin >> n;
+	map<string, int> m;
+	for(int i=0; i<n; ++i) {
+		int k; cin >> k;
+		for(int j=0; j<k; ++j) {
+			string str; cin >> str;
+			m[str]|=(1<<i);
+		}
+	}
+	bool ans=true;
+	for(auto el1: m) for(auto el2: m) {
+		int n1=el1.second, n2=el2.second;
+		if(n1==(n1|n2) || n2==(n1|n2) || (n1&n2)==0) continue;
+		ans=false;
+		break;
+	}
+	cout << (ans ? "yes" : "no") << '\n';
+}
+/*
+#include<iostream>
 #include<vector>
 #include<string>
 #include<algorithm>
@@ -91,3 +117,4 @@ int main(void) {
 	}
 	cout << (ans?"yes":"no") << '\n';
 }
+*/
