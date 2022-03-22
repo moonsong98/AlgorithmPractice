@@ -1,116 +1,78 @@
-#include<iostream>
-#include<string>
-#include<vector>
+#include<bits/stdc++.h>
+#define sz(x) (int)x.size()
 
 using namespace std;
 
-vector<string> words[26][26];
-int indegree[26], outdegree[26], adj[26][26];
-int numWords;
+vector<vector<int>> adj;
+vector<int> in, out;
 vector<int> ans;
 
-
-void init() {
-	ans=vector<int>();
-	for(int i=0; i<26; ++i) {
-		indegree[i]=outdegree[i]=0;
-		for(int j=0; j<26; ++j) {
-			words[i][j]=vector<string>();
-			adj[i][j]=0;
+void dfs(int u) {
+	for(int v=0; v<26; ++v)
+		while(adj[u][v]) {
+			--adj[u][v];
+			dfs(v);
 		}
-	}
+	ans.push_back(u);
 }
 
-void makeGraph() {
-	cout << "hihi" << '\n';
-	cin >> numWords;
-	cout << numWords << '\n';
-	for(int i=0; i<numWords; ++i) {
-		cout << i << '\n';
-		string str;
-		cin >> str;
-		int u=str[0]-'a', v=str[str.size()-1]-'a';
-		indegree[u]++;outdegree[v]++;adj[u][v]++;numWords++;words[u][v].push_back(str);
-	}
-}
-
-void dfs(int here) {
-	for(int there=0; there<26; ++there) 
-		while(adj[here][there]>0) {
-			adj[here][there]--;
-			numWords--;
-			dfs(there);
+int main(void) {
+	ios_base::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
+	int t;
+	cin >> t;
+	while(t--) {
+		ans.clear();
+		adj=vector<vector<int>> (26, vector<int>(26, 0));
+		in=vector<int>(26,0);
+		out=vector<int>(26,0);
+		vector<vector<vector<string>>> words(26,vector<vector<string>>(26));
+		int n;
+		cin >> n;
+		for(int i=0; i<n; ++i) {
+			string str;
+			cin >> str;
+			int u=str[0]-'a', v=str.back()-'a';
+			adj[u][v]++;
+			out[u]++;
+			in[v]++;
+			words[u][v].push_back(str);
 		}
-	ans.push_back(here);
-}
-
-void debug() {
-	cout << "$$$$$$$$$$$$$$$ REACHED HERE $$$$$$$$$$$$$$$$" << '\n';
-}
-
-void solution() {
-	debug();
-	init();
-	debug();
-	makeGraph();
-	/*
-	debug();
-	int start=-1, end=-1;
-	bool impossible=false;
-	for(int i=0; i<26; ++i){
-		int diff=indegree[i]-outdegree[i];
-		switch(diff) {
-			case 0: break;
-			case 1:
-				if(start!=-1) impossible=true;
-				start=i;
-				break;
-			case -1:
-				if(end!=-1) impossible=true;
-				end=i;
-				break;
-			default:
-				impossible=true;
-				break;
-		}
-		if(impossible){
-			cout << "IMPOSSIBLE" << '\n';
-			return;
-		} 
-	}
-	if(start==-1 && end!=-1 || start!=-1 && end==-1){
-		cout << "IMPOSSIBLE" << '\n';
-		return;
-	} 
-	if(start != -1) {
-		for(int i=0; i<26; ++i) 
-			if(indegree[i] > 0) {
-				dfs(i);
+		int cnt1=0,cntm1=0, si=-1;
+		bool isPossible=true;
+		for(int i=0; i<26; ++i) {
+			if(out[i]-in[i]>=2||in[i]-out[i]>=2) {
+				isPossible=false;
 				break;
 			}
-	} else {
-		dfs(start);
+			if(out[i]-in[i]==1) {
+				++cnt1;
+				si=i;
+			}
+			if(out[i]-in[i]==-1) ++cntm1;
+		}
+		isPossible=(cnt1==0&&cntm1==0)||(cnt1==1&&cntm1==1);
+		if(!isPossible) {
+			cout << "IMPOSSIBLE" << '\n';
+			continue;
+		} 
+		if(si!=-1)
+			dfs(si);
+		else 
+			for(int i=0; i<26; ++i)
+				if(out[i]) {
+					dfs(i);
+					break;
+				}
+		reverse(ans.begin(), ans.end());
+		if(ans.size()!=n+1) {
+			cout << "IMPOSSIBLE" << '\n';
+			continue;
+		}
+		for(int i=0; i+1<sz(ans); ++i) {
+			string str=words[ans[i]][ans[i+1]].back();
+			words[ans[i]][ans[i+1]].pop_back();
+			cout << str << ' ';
+		}
+		cout << '\n';
 	}
-	
-	if(numWords>0) {
-		cout << "IMPOSSIBLE" << '\n';
-		return;
-	} 
-		
-	for(int i=0; i+1<ans.size(); ++i) {
-		int u=ans[i], v=ans[i+1];
-		cout << words[u][v].back() << ' ';
-		words[u][v].pop_back();
-	}
-	cout << '\n';
-	*/
-}
-
-int main(void){
-	ios_base::sync_with_stdio(false);
-	cin.tie(nullptr);
-	
-	int t;
-	cin>>t;
-	while(t--) solution();
 }

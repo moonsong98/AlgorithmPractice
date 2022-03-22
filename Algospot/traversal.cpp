@@ -1,20 +1,27 @@
-#include<iostream>
-#include<vector>
+#include<bits/stdc++.h>
+#define sz(x) (int)x.size()
 
 using namespace std;
 
-void traversal(const vector<int>& preorder, const vector<int>& inorder) {
-	if(preorder.empty()) return;
-	int root = preorder[0];
-	int rootIndex;
-	for(int i = 0; i < inorder.size(); ++i)
+vector<int> preorder, inorder;
+
+void traversal(int l1, int r1, int l2, int r2) {
+	if(l1==r1) {
+		cout << preorder[l1] << ' ';
+		return;
+	}
+	int root = preorder[l1];
+	int leftSize=0, rightSize;
+	for(int i=l2; i<=r2; ++i)
 		if(root == inorder[i]) {
-			rootIndex = i;
+			leftSize=i-l2;
 			break;
 		}
-	traversal(vector<int>(preorder.begin() + 1, preorder.begin() + rootIndex + 1), vector<int>(inorder.begin(), inorder.begin() + rootIndex));
-	traversal(vector<int>(preorder.begin() + rootIndex + 1, preorder.end()), vector<int>(inorder.begin() + rootIndex + 1, inorder.end()));
-
+	rightSize=r1-l1-leftSize;
+	if(leftSize)
+		traversal(l1+1, l1+leftSize, l2, l2+leftSize-1);
+	if(rightSize)
+		traversal(l1+leftSize+1, r1, l2+leftSize+1, r2);
 	cout << root << " ";
 }
 
@@ -23,22 +30,13 @@ int main(void) {
 	int t;
 	cin >> t;
 	while(t--) {
-		vector<int> preorder;
-		vector<int> inorder;
 		int n;
 		cin >> n;
-		for(int i = 0; i < n; ++i){
-			int a;
-			cin >> a;
-			preorder.push_back(a);
-		}
-		for(int i = 0; i < n; ++i){
-			int a;
-			cin >> a;
-			inorder.push_back(a);
-		}
-		
-		traversal(preorder, inorder);
-		cout << endl;
+		preorder=vector<int>(n);
+		inorder=vector<int>(n);
+		for(int& a: preorder) cin >> a;
+		for(int& a: inorder) cin >> a;
+		traversal(0, n-1, 0, n-1);
+		cout << '\n';
 	}
 }

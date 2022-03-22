@@ -1,51 +1,46 @@
-#include<iostream>
-#include<map>
+#include<bits/stdc++.h>
+#define sz(x) (long long)x.size()
 
 using namespace std;
-	
-void solve() {
-	int ans = 0;
-	int numPeople;
-	map<int, int> participants;
-	
-	cin >> numPeople;
-	
-	for(int i = 0; i < numPeople; ++i) {
-		int p, q;
-		cin >> p >> q;
-		map<int, int>::iterator itlow;
-		itlow = participants.lower_bound(p);
-		if(itlow == participants.end() || itlow -> second < q)
-			participants[p] = q;
-		else {
-			ans += participants.size();
-			continue;
-		}
-		
-		itlow = participants.lower_bound(p);
-		if(itlow == participants.begin()) {
-			ans += participants.size();
-			continue;
-		}
-		itlow--;
-		while(itlow->second < q) {
-			if(itlow == participants.begin()) {
-				participants.erase(itlow);
-				break;
-			}
-			else {
-				itlow = participants.erase(itlow);
-				--itlow;
-			}
-		}
-		ans += participants.size();
-	}
-	cout << ans << endl;
-}
 
 int main(void) {
-	cin.sync_with_stdio(false);
+	ios_base::sync_with_stdio(false); cin.tie(nullptr);
 	int t;
 	cin >> t;
-	while(t--) solve();
+	map<int,int> m;
+	while(t--) {
+		int N;
+		long long ans=0ll;
+		cin >> N;
+		for(int i=0; i<N; ++i) {
+			int p, q;
+			cin >> p >> q;
+			if(!m.empty()){
+				auto it=m.lower_bound(p);
+				if(it!=m.end() && it->second>q) {
+					ans+=sz(m);
+					continue;
+				}
+				if(it!=m.begin()) {
+					--it;
+					while(true){
+						if(it->second>q) break;
+						else if(it==m.begin()) {
+							m.erase(it);
+							break;
+						}
+						else if(it->second<q){
+							auto tmp=it;
+							--it;
+							m.erase(tmp);
+						}
+					}
+				}
+			}
+			m[p]=q;
+			ans+=sz(m);
+		}
+		cout << ans << '\n';
+		m.clear();
+	}
 }
