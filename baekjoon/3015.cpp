@@ -3,29 +3,42 @@
 
 using namespace std;
 typedef long long ll;
+typedef pair<int,ll> pil;
 
 int main(void) {
 	int n;
 	cin >> n;
-	stack<ll> s;
+	stack<pil> s;
+	vector<pil> v;
 	ll ans=0;
 	for(int i=0; i<n; ++i) {
-		ll a; cin >> a;
-		int cnt=0;
-		while(!s.empty()&&a>s.top()) {
-			ans+=2;
+		int a; cin >> a;
+		if(v.empty()||v.back().first!=a) v.push_back({a, 1ll});
+		else v.back().second++;
+	}
+	for(int i=0; i<sz(v); ++i) {
+		while(!s.empty()&&s.top().first<v[i].first) {
+			ll c=s.top().second;
+			ans+=((c*(c-1))/2+c);
 			s.pop();
 		}
-		ans+=cnt;
-		s.push(a);
+		if(!s.empty()) {
+			ans+=v[i].second;
+			if(s.top().first==v[i].first) {
+				auto st=s.top();
+				s.pop();
+				s.push({st.first, st.second+v[i].second});
+				continue;
+			}
+		}
+		if(s.empty())
+			ans+=v[i].second-1;
+		s.push(v[i]);
 	}
-	ll st=s.empty()?0:s.top();
-	ll cnt=0;
 	while(!s.empty()) {
-		if(st!=s.top()) break;
-		++cnt;
+		ll c=s.top().second;
+		ans+=(c*(c-1))/2;
 		s.pop();
 	}
-	ans+=cnt*(cnt-1)/2;
 	cout << ans << '\n';
 }
