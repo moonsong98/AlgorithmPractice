@@ -17,20 +17,9 @@ int main(void) {
 		stack<pii> s;
 		s.push({v[1], 1});
 		int cnt=0;
-		for(int i=2; i<=n; ++i) {
-			if(pSum[i]>0) {
-				while(!s.empty())
-					s.pop();
-				cnt=i;
-			}
-			else if(s.empty()&&pSum[i]<=0) 
-				s.push({v[i], i});
-			else if(pSum[i]>pSum[i-1]) {
-				while(pSum[i]>=s.top().first)
-					s.pop();
+		for(int i=2; i<n; ++i)
+			if(pSum[i-1]>pSum[i]&&pSum[i]>pSum[i-1])
 				s.push({pSum[i], i});
-			}
-		}
 		while(sz(s)>1){
 			pii t=s.top(); 
 			s.pop();
