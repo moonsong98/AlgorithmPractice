@@ -1,53 +1,59 @@
 #include<bits/stdc++.h>
 using namespace std;
-typedef pair<int,int> pii;
+typedef long long ll;
 
 int main(void) {
-	cin.tie(nullptr)->sync_with_stdio(false);
-	int N, K;
-	cin >> N >> K;
-	vector<int> dist(N+1, INT_MAX);
-	vector<vector<int>> comp(K+1);
-	vector<int> compNum(N+1);
-	vector<vector<int>> adj(K+1);
-	vector<bool> communicateOwn(K+1, false);
-	priority_queue<pii> pq;
-	for(int i=1; i<=N; ++i) {
-		int a; cin >> a;
-		comp[a].push_back(i);
-		compNum[i]=a;
-	}
-	for(int i=1; i<=K; ++i) for(int j=1; j<=K; ++j) {
-		char a; cin >> a;
-		if(a-'0'==1) {
-			if(i!=j) adj[i].push_back(j);
-			else communicateOwn[i]=true;
-		}
-	}
-	dist[1]=0;
-	pq.push({0, 1});
-	while(!pq.empty()) {
-		int cost=-pq.top().first, u=pq.top().second, compN=compNum[u];
-		pq.pop();
-		if(cost>dist[u]) continue;
-		if(communicateOwn[compN]) {
-			for(int v: comp[compN]) {
-				int nCost=cost+abs(u-v);
-				if(dist[v]>nCost) {
-					dist[v]=nCost;
-					pq.push({-nCost, v});
-				}
-			}
-		}
-		for(int c: adj[compN]) {
-			for(int v: comp[c]) {
-				int nCost=cost+abs(u-v);
-				if(dist[v]>nCost) {
-					dist[v]=nCost;
-					pq.push({-nCost, v});
-				}
-			}
-		}
-	}
-	cout << (dist[N]==INT_MAX?-1:dist[N]) << '\n';
+    ios_base::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
+    int N, K; cin >> N >> K;
+    vector<int> compNum(N); 
+    vector<vector<int>> comps(K+1);
+    vector<vector<int>> adj(N);
+    for(int i=0; i<N; ++i) {
+        cin >> compNum[i];
+        comps[compNum[i]].push_back(i);
+    }
+    for(int i=1; i<=K; ++i) for(int j=1; j<=K; ++j) {
+        char ch; cin >> ch;
+        if(comps[j].empty()) continue;
+        if(ch-'0') {
+            for(int u:comps[i]) {
+                auto lb=lower_bound(comps[j].begin(), comps[j].end(), u);
+                if(lb==comps[j].begin()) {
+                    if(*lb!=u)
+                        adj[u].push_back(*lb);
+                }
+                else if(lb==comps[j].end())
+                    adj[u].push_back(*(lb-1));
+                else {
+                    if(*lb==u) {
+                        adj[u].push_back(*(lb-1));
+                        if(comps[j].end()-lb>1) 
+                            adj[u].push_back(*(lb+1));
+                    }
+                    else {
+                        adj[u].push_back(*(lb-1));
+                        adj[u].push_back(*lb);
+                    }
+                }
+                if(u!=N-1&&j==compNum[N-1]) adj[u].push_back(N-1);
+            }
+        }
+    }
+    vector<long long> dist(N, LLONG_MAX);
+    dist[0]=0;
+    priority_queue<pair<long long, int>> pq;
+    pq.push({0, 0});
+    while(!pq.empty()) {
+        ll cur=-pq.top().first; int u=pq.top().second; pq.pop();
+        if(dist[u]<cur) continue;
+        if(u==N-1) break;
+        for(int v: adj[u]) {
+            ll newDist=(ll)abs(u-v)+cur;
+            if(newDist<dist[v]) {
+                dist[v]=newDist;
+                pq.push({-newDist, v});
+            }
+        }
+    }
+    cout << (dist[N-1]==LLONG_MAX?-1:dist[N-1]) << '\n';
 }
