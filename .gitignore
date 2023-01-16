@@ -1,3 +1,4 @@
 *.out
 *.in
 *.sh
+*.DS_Store

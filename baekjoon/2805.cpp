@@ -1,3 +1,31 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+typedef long long ll;
+
+int main(void) {
+    ios_base::sync_with_stdio(false); cin.tie(nullptr); cout.tie(nullptr);
+    int n, m, ans = 0; cin >> n >> m;
+    int l = 0, r = 0;
+    vector<int> h(n);
+    for(int &a: h) {
+        cin >> a;
+        r = max(r, a);
+    }
+    while(l <= r) {
+        int mid = l + (r-l)/2;
+        ll sum = 0;
+        for(int a: h) 
+            sum += (ll)max(0, a - mid);
+        if(sum >= m) {
+            l = mid + 1;
+            ans = mid;
+        }
+        else r = mid - 1;
+    }
+    cout << ans << '\n';
+}
+/*
 #include<iostream>
 #include<vector>
 
@@ -31,3 +59,4 @@ int main(void){
 	}
 	cout << ans << '\n';
 }
+*/
