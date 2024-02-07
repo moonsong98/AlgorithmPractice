@@ -1,4 +1,6 @@
-*.out
-*.in
-*.sh
-*.DS_Store
+**/*.out
+**/*.in
+**/*.sh
+**/.DS_Store
+**/*.pyc
+venv
