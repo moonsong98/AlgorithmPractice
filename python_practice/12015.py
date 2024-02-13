@@ -14,7 +14,7 @@ for el in arr:
 
         replace_idx = 0
         while l <= r:
-            mid = l + (r-l) // 2
+            mid = l + (r - l) // 2
             if el <= lis[mid]:
                 replace_idx = mid
                 r = mid - 1

@@ -10,11 +10,11 @@ for _ in range(n):
 
 arr.sort()
 
-l, r = 1, arr[n-1]
+l, r = 1, arr[n - 1]
 
 ans = 0
 
-while(l <= r):
+while l <= r:
     mid = l + (r - l) // 2
     cnt = 0
     for el in arr:

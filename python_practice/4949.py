@@ -20,7 +20,12 @@ while True:
                 print("no")
                 flag = 1
                 break
-            elif c == ")" and arr[len(arr) - 1] != "(" or c == "]" and arr[len(arr) - 1] != "[":
+            elif (
+                c == ")"
+                and arr[len(arr) - 1] != "("
+                or c == "]"
+                and arr[len(arr) - 1] != "["
+            ):
                 print("no")
                 flag = 1
                 break

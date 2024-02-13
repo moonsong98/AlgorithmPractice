@@ -13,12 +13,12 @@ for el in arr:
         lis_idx.append(len(lis))
         lis.append(el)
     else:
-        l, r  = 0, len(lis) - 1
+        l, r = 0, len(lis) - 1
 
         replaced_idx = 0
         while l <= r:
-            mid = l + (r-l) // 2
-            if el <=lis[mid]:
+            mid = l + (r - l) // 2
+            if el <= lis[mid]:
                 replaced_idx = mid
                 r = mid - 1
             else:
@@ -31,7 +31,7 @@ print(len(lis))
 cur_idx = len(lis) - 1
 real_lis = []
 
-for idx in range(n-1, -1, -1):
+for idx in range(n - 1, -1, -1):
     if cur_idx == -1:
         break
     if lis_idx[idx] == cur_idx:
@@ -41,4 +41,4 @@ for idx in range(n-1, -1, -1):
 real_lis.reverse()
 
 for el in real_lis:
-    print(el, end = ' ')
+    print(el, end=" ")

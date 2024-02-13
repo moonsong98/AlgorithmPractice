@@ -9,8 +9,9 @@ arr.sort()
 m = int(input())
 cmp = list(map(int, input().split()))
 
+
 def bs(num):
-    l, r = 0, n-1
+    l, r = 0, n - 1
     while l <= r:
         mid = l + (r - l) // 2
 
@@ -22,6 +23,7 @@ def bs(num):
             l = mid + 1
 
     return 0
+
 
 for el in cmp:
     l, r = 0, n

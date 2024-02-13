@@ -7,7 +7,7 @@ arr = list(map(int, input().split()))
 arr.sort()
 x = int(input())
 
-l, r, ans = 0, n-1, 0
+l, r, ans = 0, n - 1, 0
 
 while l <= r:
     s = arr[l] + arr[r]

@@ -18,9 +18,9 @@ for l in range(n):
         r += 1
     right.append(r - l)
 
-maxRightValue = [0] * (n+1)
-for idx in range(n-1, -1, -1):
-    maxRightValue[idx] = max(maxRightValue[idx+1], right[idx])
+maxRightValue = [0] * (n + 1)
+for idx in range(n - 1, -1, -1):
+    maxRightValue[idx] = max(maxRightValue[idx + 1], right[idx])
 
 ans = 0
 

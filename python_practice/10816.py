@@ -8,11 +8,12 @@ arr.sort()
 m = int(input())
 cmp = list(map(int, input().split()))
 
+
 def lb(num):
-    l, r = 0, n-1
+    l, r = 0, n - 1
     ret = n
     while l <= r:
-        mid = l + (r-l) // 2
+        mid = l + (r - l) // 2
         if arr[mid] >= num:
             ret = mid
             r = mid - 1
@@ -21,11 +22,12 @@ def lb(num):
 
     return ret
 
+
 def ub(num):
-    l, r = 0, n-1
+    l, r = 0, n - 1
     ret = n
     while l <= r:
-        mid = l + (r-l) // 2
+        mid = l + (r - l) // 2
         if arr[mid] > num:
             ret = mid
             r = mid - 1
@@ -33,7 +35,8 @@ def ub(num):
             l = mid + 1
     return ret
 
+
 for el in cmp:
     lv, rv = lb(el), ub(el)
 
-    print(rv - lv, end = " ")
+    print(rv - lv, end=" ")

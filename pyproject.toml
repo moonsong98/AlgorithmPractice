@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "algorithmpractice"
+version = "0.1.0"
+description = ""
+authors = ["Moon Kyung Song <moonsong98@postech.ac.kr>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.12"
+black = "^24.2.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
+
+[virtualenvs]
+in-project = true
