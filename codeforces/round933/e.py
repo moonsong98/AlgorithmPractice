@@ -1,4 +1,5 @@
 import sys
+from collections import deque
 
 input = sys.stdin.readline
 sys.setrecursionlimit(int(1e9))
@@ -14,17 +15,16 @@ while T:
 
     for _ in range(n):
         r = list(map(int, input().split()))
-        dp = [-1] * (m)
 
-        dp[0] = 1
-        for i in range(m - 1):
-            for j in range(1, d + 2):
-                if i + j < m:
-                    if dp[i + j] == -1:
-                        dp[i + j] = dp[i] + r[i + j] + 1
-                    else:
-                        dp[i + j] = min(dp[i + j], dp[i] + r[i + j] + 1)
-
+        dp = [1]
+        q = deque([(1, 0)])
+        for i in range(1, m):
+            dp.append(q[0][0] + r[i] + 1)
+            while len(q) and q[-1][0] >= dp[-1]:
+                q.pop()
+            while len(q) and q[0][1] < i - d:
+                q.popleft()
+            q.append((dp[-1], i))
         min_costs.append(dp[m - 1])
 
     for i in range(n):
