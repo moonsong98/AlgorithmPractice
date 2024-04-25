@@ -1,14 +1,11 @@
 import sys
-import math
 
 input = sys.stdin.readline
 
-dp1 = dict()
+MOD = 10**9 + 7
 
 
 def solve():
-    MOD = 10**9 + 7
-
     n, k = list(map(int, input().split()))
     used = [False] * (n)
 
@@ -22,26 +19,19 @@ def solve():
         if not el:
             cnt += 1
 
-    # if cnt == 0:
-    #     print(0)
-    #     return
+    if cnt == 0:
+        print(1)
+        return
 
-    ans = 1
-    for i in range(1, cnt // 2 + 1):
-        if (cnt, i) in dp1:
-            value1 = dp1[(cnt, i)]
-        else:
-            value1 = math.comb(cnt, i) % MOD
-            dp1[(cnt, i)] = value1
+    dp = [0 for _ in range(cnt + 1)]
+    dp[0] = 1
+    dp[1] = 1
 
-        value2 = math.perm(cnt - i, i) % MOD
-        ans += value1 * value2
+    for i in range(2, cnt + 1):
+        dp[i] = (dp[i - 1] % MOD + (2 * (i - 1) * dp[i - 2]) % MOD) % MOD
 
-    print(ans % MOD)
+    print(dp[cnt])
 
 
-t = int(input())
-
-while t:
-    t -= 1
+for _ in range(int(input())):
     solve()
